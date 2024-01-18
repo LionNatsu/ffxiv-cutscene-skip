@@ -106,12 +106,11 @@ int patch() {
             return 1;
         }
         spdlog::info("SUCCESS! The patch applied!");
-        spdlog::info(L"Waiting for the game to exit...");
-        do {
+        spdlog::info("Waiting for the game to exit...");
+        while (find_process_pid(PROCESS_NAME)) {
             std::this_thread::sleep_for(1s);
-            pid = find_process_pid(PROCESS_NAME);
-        } while (pid);
-        spdlog::info(L"The game exited.");
+        }
+        spdlog::info("The game exited.");
         return 0;
     }
     spdlog::error("FAILED! Too many retries.");
